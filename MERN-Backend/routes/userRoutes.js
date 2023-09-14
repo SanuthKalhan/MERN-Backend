@@ -3,22 +3,17 @@ const User = require('../models/User');
 //const Order = require('../Order');
 // signup
 
-router.post('/signup', async (req, res) => {
-    const { email, password, confirmPassword } = req.body;
-  
-    // Check if password and confirmPassword match
-    if (password !== confirmPassword) {
-      return res.status(400).send('Passwords do not match');
-    }
-  
-    try {
-      const user = await User.create({ email, password });
-      res.json(user);
-    } catch (e) {
-      if (e.code === 11000) return res.status(400).send('Email already exists');
-      res.status(400).send(e.message);
-    }
-  });
+router.post('/signup', async(req, res)=> {
+  const {name, email, password} = req.body;
+
+  try {
+    const user = await User.create({name, email, password});
+    res.json(user);
+  } catch (e) {
+    if(e.code === 11000) return res.status(400).send('Email already exists');
+    res.status(400).send(e.message)
+  }
+})
   
 
 // login
